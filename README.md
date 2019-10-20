@@ -213,6 +213,13 @@ Type: Integer
 
 Default: `1`
 
+### countDownDuration - iOS
+Represents the displayed duration in seconds.
+
+Type: Integer
+
+Default: `0`
+
 ### popoverArrowDirection - iOS
 Force the UIPopoverArrowDirection enum.
 The value `any` will revert to default `UIPopoverArrowDirectionAny` and let the app choose the proper direction itself.
