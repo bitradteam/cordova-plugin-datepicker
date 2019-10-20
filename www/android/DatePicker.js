@@ -26,6 +26,13 @@ DatePicker.prototype.ANDROID_THEMES = {
  */
 DatePicker.prototype.show = function(options, cb, errCb) {
 
+		if(options.minDate && options.minDate instanceof Date){
+		options.minDate = options.minDate.valueOf();
+	}
+	if(options.maxDate && options.maxDate instanceof Date){
+		options.maxDate = options.maxDate.valueOf();
+	}
+	
 	if (options.date && options.date instanceof Date) {
 		options.date = (options.date.getMonth() + 1) + "/" +
 					   (options.date.getDate()) + "/" +
