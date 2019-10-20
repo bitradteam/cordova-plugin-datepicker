@@ -33,7 +33,7 @@ DatePicker.prototype.ANDROID_THEMES = {
 /**
  * show - true to show the ad, false to hide the ad
  */
-DatePicker.prototype.show = function (options, cb, fcb, onPickerChange) {
+DatePicker.prototype.show = function (options, cb, errCb, onPickerChange) {
     var padDate = function (date) {
         if (date.length == 1) {
             return ("0" + date);
@@ -104,8 +104,14 @@ DatePicker.prototype.show = function (options, cb, fcb, onPickerChange) {
     this._callback = cb;
     this._onPickerChange = onPickerChange;
 
+    var errCallback = function (message) {
+        if (typeof errCb === 'function') {
+            errCb(message);
+        }
+    }
+
     exec(null,
-        null,
+        errCallback,
         "DatePicker",
         "show",
         [defaults]

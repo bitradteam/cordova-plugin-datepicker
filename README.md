@@ -1,22 +1,24 @@
-# DatePicker Plugin for Cordova/PhoneGap 4.0 (iOS and Android and Windows)
+# DatePicker Plugin for Cordova/PhoneGap 4.0 (iOS and Android and Windows (deprecated))
 
-This is a combined version of DatePicker iOS and Android and Windows plugin for Cordova/Phonegap 4.0.
+This is a combined version of the cordova-plugin-datepicker based on this fork https://github.com/cognifit/cordova-plugin-datepicker
+and with a lot of the more recent work form other forks pulled in.
+
+In turn this was based on these plugins:
+
 - Original iOS version: https://github.com/sectore/phonegap3-ios-datepicker-plugin
 
 - Original Android version: https://github.com/bikasv/cordova-android-plugins/tree/master/datepicker
 
-New in 0.8.0 (Android Only):
-- Android code refactored
+New in 1.0.0:
+- Merged iOS fixes for dark mode
 
-- Option datetime added (default if mode is unknown), opening a new time dialog after setting the date
+- Merged Android fixes for inconsistent min/max date representation
 
-- Options okText and cancelText to define the labels for POSITIVE and NEGATIVE buttons
+- Merged and enhanced browser implementation
 
-- Option todayText to set the label of a button that selects current date (date and datetime)
+- Added types
 
-- Option nowText to set the label of a button that selects current time (time and datetime)
-
-- Option is24Hour added
+- Quite likely broke some stuff in the process
 
 
 ## Installation
@@ -24,19 +26,19 @@ New in 0.8.0 (Android Only):
 - Local development workflow using [Cordova CLI](http://cordova.apache.org/docs/en/edge/)
 
 ```bash
-cordova plugin add cordova-plugin-datepicker
+cordova plugin add cordova-plugin-datepicker-unified
 ```
 
 - Local development workflow using [PhoneGap CLI](http://phonegap.com/install/)
 
 ```bash
-phonegap local plugin add cordova-plugin-datepicker
+phonegap local plugin add cordova-plugin-datepicker-unified
 ```
 
 - Cloud-based development workflow using [PhoneGap Build](http://build.phonegap.com)
 
 ```bash
-<gap:plugin name="cordova-plugin-datepicker" source="npm" />
+<gap:plugin name="cordova-plugin-datepicker-unified" source="npm" />
 ```
 
 
