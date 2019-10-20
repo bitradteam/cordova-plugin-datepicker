@@ -58,4 +58,13 @@
         </js-module>
     </platform>
 
+	 <!-- browser -->
+    <platform name="browser">
+        <js-module src="www/browser/DatePicker.js" name="DatePicker">
+            <clobbers target="datePicker" />
+        </js-module>
+        <js-module src="src/browser/DatePickerProxy.js" name="DatePickerProxy">
+            <merges target="" />
+        </js-module>
+    </platform>
 </plugin>
