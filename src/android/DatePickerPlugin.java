@@ -95,12 +95,18 @@ public class DatePickerPlugin extends CordovaPlugin {
 			@Override
 			public void run() {
 				final TimeSetListener timeSetListener = new TimeSetListener(datePickerPlugin, callbackContext, calendarDate);
-				final TimePickerDialog timeDialog = new TimePickerDialog(currentCtx, theme, timeSetListener, jsonDate.hour,
-						jsonDate.minutes, jsonDate.is24Hour) {
+				final CustomTimePickerDialog timeDialog = new CustomTimePickerDialog(currentCtx, theme, timeSetListener, jsonDate.hour,
+						jsonDate.minutes, jsonDate.is24Hour, jsonDate.minuteInterval) {
 					public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
 						timePicker = view;
 						timePickerHour = hourOfDay;
-						timePickerMinute = minute;
+						if(theme != 2){
+							int offset = minute%jsonDate.minuteInterval != 0 ? jsonDate.minuteInterval: 0;
+							timePickerMinute = (minute/jsonDate.minuteInterval)*jsonDate.minuteInterval + offset;
+							updateTimeClock(timePickerHour, timePickerMinute);
+						} else {
+							timePickerMinute = minute;
+						}
 					}
 				};
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -132,6 +138,23 @@ public class DatePickerPlugin extends CordovaPlugin {
 					String labelOk = jsonDate.okText.isEmpty() ? currentCtx.getString(android.R.string.ok) : jsonDate.okText;
 					timeDialog.setButton(DialogInterface.BUTTON_POSITIVE, labelOk, timeDialog);
 				}
+				
+				Calendar todayDate = calendarDate.getInstance();
+				todayDate.set(Calendar.MINUTE, 0);
+				todayDate.set(Calendar.SECOND, 0);
+				todayDate.set(Calendar.MILLISECOND, 0);
+
+				calendarDate.set(Calendar.MINUTE, 0);
+				calendarDate.set(Calendar.SECOND, 0);
+				calendarDate.set(Calendar.MILLISECOND, 0);
+
+				if (todayDate.getTime().compareTo(calendarDate.getTime()) == 0)
+				{
+					timeDialog.setMinHour(calendarDate.get(Calendar.HOUR_OF_DAY));
+				} else {
+					timeDialog.setMinHour(0);
+				}
+
 				timeDialog.show();
 				timeDialog.updateTime(new Random().nextInt(23), new Random().nextInt(59));
 				timeDialog.updateTime(jsonDate.hour, jsonDate.minutes);
