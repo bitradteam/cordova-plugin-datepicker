@@ -15,37 +15,37 @@ function DatePicker() {
  * @todo Avoid error when an Android theme is define...
  */
 DatePicker.prototype.ANDROID_THEMES = {
-  THEME_TRADITIONAL          : 1, // default
-  THEME_HOLO_DARK            : 2,
-  THEME_HOLO_LIGHT           : 3,
-  THEME_DEVICE_DEFAULT_DARK  : 4,
-  THEME_DEVICE_DEFAULT_LIGHT : 5
+	THEME_TRADITIONAL: 1, // default
+	THEME_HOLO_DARK: 2,
+	THEME_HOLO_LIGHT: 3,
+	THEME_DEVICE_DEFAULT_DARK: 4,
+	THEME_DEVICE_DEFAULT_LIGHT: 5
 };
 
 /**
 * show - true to show the ad, false to hide the ad
 */
-DatePicker.prototype.show = function(options, cb) {
+DatePicker.prototype.show = function (options, cb) {
 	if (options.date) {
 		options.date = (options.date.getMonth() + 1) + "/" +
-		(options.date.getDate()) + "/" +
-		(options.date.getFullYear()) + "/" +
-		(options.date.getHours()) + "/" +
-		(options.date.getMinutes());
+			(options.date.getDate()) + "/" +
+			(options.date.getFullYear()) + "/" +
+			(options.date.getHours()) + "/" +
+			(options.date.getMinutes());
 	}
 	var defaults = {
-		mode : 'date',
-		date : '',
+		mode: 'date',
+		date: '',
 		minDate: 0,
 		maxDate: 0,
-    clearText: 'Clear',
-    cancelText: '',
-    okText: '',
-    locale: '',
-    cssRules: '',
-    firstDayOfWeek: 0,
-    hoursLabel: '',
-    minutesLabel: '',
+		clearText: 'Clear',
+		cancelText: '',
+		okText: '',
+		locale: '',
+		cssRules: '',
+		firstDayOfWeek: 0,
+		hoursLabel: '',
+		minutesLabel: '',
 	};
 	for (var key in defaults) {
 		if (typeof options[key] !== "undefined") {
@@ -53,13 +53,13 @@ DatePicker.prototype.show = function(options, cb) {
 		}
 	}
 	//this._callback = cb;
-	var callback = function(message) {
-		if(message == -1){
+	var callback = function (message) {
+		if (message == -1) {
 			cb(message);
 		}
 		else {
 			var timestamp = Date.parse(message);
-			if(isNaN(timestamp) == false) {
+			if (isNaN(timestamp) == false) {
 				cb(new Date(message));
 			}
 			else {
