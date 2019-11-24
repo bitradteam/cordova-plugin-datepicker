@@ -103,7 +103,7 @@ public class DatePickerPlugin extends CordovaPlugin {
 						timePicker = view;
 						timePickerHour = hourOfDay;
 						if (theme != 2) {
-							int offset = minute % jsonDate.minuteInterval != 0 ? jsonDate.minuteInterval : 0;
+							int offset = minute % jsonDate.minuteInterval != 0 ? jsonDate.minuteInterval : 1;
 							timePickerMinute = (minute / jsonDate.minuteInterval) * jsonDate.minuteInterval + offset;
 							updateTimeClock(timePickerHour, timePickerMinute);
 						} else {
@@ -399,6 +399,7 @@ public class DatePickerPlugin extends CordovaPlugin {
 		private int hour = 0;
 		private int minutes = 0;
 		private boolean is24Hour = false;
+		private int minuteInterval = 0;
 
 		public JsonDate() {
 			reset(Calendar.getInstance());
@@ -426,6 +427,7 @@ public class DatePickerPlugin extends CordovaPlugin {
 				todayText = isNotEmpty(obj, "todayText") ? obj.getString("todayText") : "";
 				nowText = isNotEmpty(obj, "nowText") ? obj.getString("nowText") : "";
 				is24Hour = isNotEmpty(obj, "is24Hour") ? obj.getBoolean("is24Hour") : false;
+				minuteInterval = isNotEmpty(obj, "minuteInterval") ? obj.getInt("minuteInterval") : 0;
 
 				String optionDate = obj.getString("date");
 
@@ -442,10 +444,8 @@ public class DatePickerPlugin extends CordovaPlugin {
 
 			return this;
 		}
+		minuteInterval = isNotEmpty(obj, "minuteInterval") ? obj.getInt("minuteInterval") : 0;
 
-		public boolean isNotEmpty(JSONObject object, String key) throws JSONException {
-			return object.has(key) && !object.isNull(key) && object.get(key).toString().length() > 0
-					&& !JSONObject.NULL.toString().equals(object.get(key).toString());
 		}
 
 	}

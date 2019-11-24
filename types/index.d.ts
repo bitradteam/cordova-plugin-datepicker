@@ -3,12 +3,13 @@
 declare namespace DatePicker {
 
     export enum ANDROID_THEMES {
+        THEME_STYLED = 0,
         THEME_TRADITIONAL = 1, // default
         THEME_HOLO_DARK = 2,
         THEME_HOLO_LIGHT = 3,
         THEME_DEVICE_DEFAULT_DARK = 4,
         THEME_DEVICE_DEFAULT_LIGHT = 5
-    };
+    }
 
     export enum UIPopoverArrowDirection {
         up = 1,
@@ -16,17 +17,17 @@ declare namespace DatePicker {
         left = 4,
         right = 8,
         any = 15
-    };
+    }
 
     export interface Options {
         mode?: string,
         date: Date,
-        minDate?: number,
-        maxDate?: number,
+        minDate?: Date,
+        maxDate?: Date,
         minuteInterval?: number,
 
         // iOS
-        allowOldDates: ?boolean,
+        allowOldDates?: boolean,
         allowFutureDates?: boolean,
         doneButtonLabel?: string,
         doneButtonColor?: string,
@@ -35,9 +36,8 @@ declare namespace DatePicker {
         locale?: string,
         x?: string,
         y?: string,
-        countDownDuration: 0,
+        countDownDuration?: 0,
         popoverArrowDirection?: UIPopoverArrowDirection,
-        locale?: string,
 
         // Android
         titleText?: string,
@@ -48,16 +48,16 @@ declare namespace DatePicker {
         is24Hour?: false,
         androidTheme?: ANDROID_THEMES
     }
+    export interface datePickerCallbackFunction {
+        (date: Date): void
+    }
+
+    export interface datePickerErrorCallbackFunction {
+        (error: string): void
+    }
 }
 
-export interface datePickerCallbackFunction {
-    (date:string):void
-}
+declare namespace datePicker {
 
-export interface datePickerErrorCallbackFunction {
-    (error:string):void
-}
-
-export interface datePicker {
-    show(options:DatePicker.Options, callback:datePickerCallbackFunction, errorCallback:datePickerErrorCallbackFunction): void
+    export function show(options: DatePicker.Options, callback: DatePicker.datePickerCallbackFunction, errorCallback: DatePicker.datePickerErrorCallbackFunction): void;
 }
