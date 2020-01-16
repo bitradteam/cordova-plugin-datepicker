@@ -1,23 +1,8 @@
-# DatePicker Plugin for Cordova/PhoneGap 4.0 (iOS and Android and Windows)
+# DatePicker Plugin for Cordova
 
-This is a combined version of DatePicker iOS and Android and Windows plugin for Cordova/Phonegap 4.0.
-- Original iOS version: https://github.com/sectore/phonegap3-ios-datepicker-plugin
+- This is a fork of
 
-- Original Android version: https://github.com/bikasv/cordova-android-plugins/tree/master/datepicker
-
-New in 0.8.0 (Android Only):
-- Android code refactored
-
-- Option datetime added (default if mode is unknown), opening a new time dialog after setting the date
-
-- Options okText and cancelText to define the labels for POSITIVE and NEGATIVE buttons
-
-- Option todayText to set the label of a button that selects current date (date and datetime)
-
-- Option nowText to set the label of a button that selects current time (time and datetime)
-
-- Option is24Hour added
-
+- With added not merged PRs: https://github.com/VitaliiBlagodir/cordova-plugin-datepicker/pull/244, https://github.com/VitaliiBlagodir/cordova-plugin-datepicker/pull/275 & https://github.com/VitaliiBlagodir/cordova-plugin-datepicker/pull/279
 
 ## Installation
 
