@@ -1,11 +1,11 @@
 # DatePicker Plugin for Cordova
 
-- This is a fork of https://github.com/VitaliiBlagodir/cordova-plugin-datepicker
+Updated fork of https://github.com/VitaliiBlagodir/cordova-plugin-datepicker
 
-- Added not merged PRs: 
-* https://github.com/VitaliiBlagodir/cordova-plugin-datepicker/pull/244 
-* https://github.com/VitaliiBlagodir/cordova-plugin-datepicker/pull/275 
-* https://github.com/VitaliiBlagodir/cordova-plugin-datepicker/pull/279
+Added not merged PRs: 
+* Fix Date Dialog extra right space on android 7.0+ (https://github.com/VitaliiBlagodir/cordova-plugin-datepicker/pull/244)
+* Force Light theme in plist (https://github.com/VitaliiBlagodir/cordova-plugin-datepicker/pull/275)
+* Fix background color with iOS13 dark theme. (https://github.com/VitaliiBlagodir/cordova-plugin-datepicker/pull/279)
 
 ## Installation
 
