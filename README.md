@@ -1,8 +1,11 @@
 # DatePicker Plugin for Cordova
 
-- This is a fork of
+- This is a fork of https://github.com/VitaliiBlagodir/cordova-plugin-datepicker
 
-- With added not merged PRs: https://github.com/VitaliiBlagodir/cordova-plugin-datepicker/pull/244, https://github.com/VitaliiBlagodir/cordova-plugin-datepicker/pull/275 & https://github.com/VitaliiBlagodir/cordova-plugin-datepicker/pull/279
+- Added not merged PRs: 
+* https://github.com/VitaliiBlagodir/cordova-plugin-datepicker/pull/244 
+* https://github.com/VitaliiBlagodir/cordova-plugin-datepicker/pull/275 
+* https://github.com/VitaliiBlagodir/cordova-plugin-datepicker/pull/279
 
 ## Installation
 
