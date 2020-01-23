@@ -16,8 +16,6 @@
 
 @interface DatePicker ()
 
-@property (nonatomic) UIPopoverController *datePickerPopover;
-
 @property (nonatomic) IBOutlet UIView* datePickerContainer;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *datePickerComponentsContainerVSpace;
 @property (nonatomic) IBOutlet UIView* datePickerComponentsContainer;
@@ -29,18 +27,13 @@
 
 @implementation DatePicker
 
-#define isIPhone (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
 #define ANIMATION_DURATION 0.3
 
 #pragma mark - UIDatePicker
 
 - (void)show:(CDVInvokedUrlCommand*)command {
   NSMutableDictionary *options = [command argumentAtIndex:0];
-  //if (isIPhone) {
-    [self showForPhone: options];
-  //} else {
- //   [self showForPad: options];
- // }
+  [self showForPhone: options];
 }
 
 - (BOOL)showForPhone:(NSMutableDictionary *)options {
@@ -53,6 +46,9 @@
   [self updateDatePicker:options];
   [self updateCancelButton:options];
   [self updateDoneButton:options];
+  if (@available(iOS 13.0, *)) {
+    self.datePickerContainer.overrideUserInterfaceStyle = UIUserInterfaceStyleLight;
+  }
   
   UIInterfaceOrientation deviceOrientation = [UIApplication sharedApplication].statusBarOrientation;
   
@@ -68,10 +64,7 @@
     width = self.webView.superview.frame.size.width;
     height= self.webView.superview.frame.size.height;
   }
-
-  NSLog(@"%.2f", width);
-  NSLog(@"%.2f", height);
-
+  
   self.datePickerContainer.frame = CGRectMake(0, 0, width, height);
   
   [self.webView.superview addSubview: self.datePickerContainer];
@@ -99,13 +92,8 @@
   return true;
 }
 
-- (BOOL)showForPad:(NSMutableDictionary *)options {
-    self.datePickerPopover = [self createPopover:options];
-    return true;
-}
-
 - (void)hide {
-  //if (isIPhone) {
+  
     CGRect frame = CGRectOffset(self.datePickerComponentsContainer.frame,
                                 0,
                                 self.datePickerComponentsContainer.frame.size.height);
@@ -120,10 +108,6 @@
                      } completion:^(BOOL finished) {
                        [self.datePickerContainer removeFromSuperview];
                      }];
-
- // } else {
- //   [self.datePickerPopover dismissPopoverAnimated:YES];
- // }
 }
 
 #pragma mark - Actions
@@ -154,54 +138,7 @@
 - (void)jsDateSelected {
   NSTimeInterval seconds = [self.datePicker.date timeIntervalSince1970];
   NSString *jsCallback = [NSString stringWithFormat:@"datePicker._dateSelected(\"%f\");", seconds];
-    
   [self.commandDelegate evalJs:jsCallback];
-}
-
-
-#pragma mark - UIPopoverControllerDelegate methods
-
-- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
-  [self jsDateSelected];
-}
-
-#pragma mark - Factory methods
-
-- (UIPopoverController *)createPopover:(NSMutableDictionary *)options {
-  
-  CGFloat pickerViewWidth = 320.0f;
-  CGFloat pickerViewHeight = 216.0f;
-  UIView *datePickerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, pickerViewWidth, pickerViewHeight)];
-  
-  CGRect frame = CGRectMake(0, 0, 0, 0);
-  // in iOS8, UIDatePicker couldn't be shared in multi UIViews, it will cause crash. so   create new UIDatePicker instance every time
-  if (! self.datePicker || [[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0){
-      self.datePicker = [self createDatePicker:options frame:frame];
-      [self.datePicker addTarget:self action:@selector(dateChangedAction:) forControlEvents:UIControlEventValueChanged];
-  }
-  [self updateDatePicker:options];
-  [datePickerView addSubview:self.datePicker];
-  
-  UIViewController *datePickerViewController = [[UIViewController alloc]init];
-  datePickerViewController.view = datePickerView;
-  
-  UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:datePickerViewController];
-  popover.delegate = self;
-  [popover setPopoverContentSize:CGSizeMake(pickerViewWidth, pickerViewHeight) animated:NO];
-  
-  CGFloat x = [[options objectForKey:@"x"] intValue];
-  CGFloat y = [[options objectForKey:@"y"] intValue];
-  UIPopoverArrowDirection arrowDirection = [[options objectForKey:@"popoverArrowDirection"] intValue];
-  
-  CGRect anchor = CGRectMake(x, y, 1, 1);
-  [popover presentPopoverFromRect:anchor inView:self.webView.superview  permittedArrowDirections:arrowDirection animated:YES];
-  
-  return popover;
-}
-
-- (UIDatePicker *)createDatePicker:(NSMutableDictionary *)options frame:(CGRect)frame {
-  UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:frame];
-  return datePicker;
 }
 
 #define DATETIME_FORMAT @"yyyy-MM-dd'T'HH:mm:ss'Z'"

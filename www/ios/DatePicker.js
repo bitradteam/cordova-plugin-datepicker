@@ -111,9 +111,17 @@ DatePicker.prototype.show = function(options, cb) {
 };
 
 DatePicker.prototype._dateSelected = function(date) {
-    var d = new Date(parseFloat(date) * 1000);
+    // return date as MM/DD/YYYY to avoid problems with time zones
+    var pickedDate = new Date(parseFloat(date) * 1000),
+        year = pickedDate.getFullYear(),
+        month = pickedDate.getMonth() + 1,
+        day = pickedDate.getDate(),
+        dateString;
+   
+    dateString = "" + (month < 10 ? "0" : "") + month + "/" + (day < 10 ? "0" : "") + day + "/" + year;
+    
     if (this._callback)
-        this._callback(d);
+       this._callback(dateString);
 };
 
 DatePicker.prototype._dateSelectionCanceled = function() {
