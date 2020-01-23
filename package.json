@@ -1,18 +1,20 @@
 {
-  "name": "cordova-plugin-datepicker",
-  "version": "0.9.2",
+  "name": "cordova-plugin-datepicker-unified",
+  "version": "1.0.0",
   "description": "Cordova DatePicker Plugin",
+  "types": "./types/index.d.ts",
   "cordova": {
-    "id": "cordova-plugin-datepicker",
+    "id": "cordova-plugin-datepicker-unified",
     "platforms": [
       "ios",
       "android",
-      "windows"
+      "windows",
+      "browser"
     ]
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/VitaliiBlagodir/cordova-plugin-datepicker.git"
+    "url": "https://github.com/ReallySmallSoftware/cordova-plugin-datepicker-unified"
   },
   "keywords": [
     "cordova",

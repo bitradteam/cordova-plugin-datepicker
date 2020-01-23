@@ -2,8 +2,8 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    id="cordova-plugin-datepicker"
-    version="0.9.2">
+    id="cordova-plugin-datepicker-unified"
+    version="1.0.0">
 
     <name>DatePicker</name>
 
@@ -13,7 +13,7 @@
 
     <keywords>cordova,phonegap,datepicker,android,ios,ios7,ios8,wp</keywords>
 
-    <repo>https://github.com/VitaliiBlagodir/cordova-plugin-datepicker.git</repo>
+    <repo>https://github.com/ReallySmallSoftware/cordova-plugin-datepicker-unified</repo>
 
     <!-- android -->
     <platform name="android">
@@ -28,6 +28,7 @@
         </js-module>
 
         <source-file src="src/android/DatePickerPlugin.java" target-dir="src/com/plugin/datepicker" />
+	<source-file src="src/android/CustomTimePickerDialog.java" target-dir="src/com/plugin/datepicker" />
     </platform>
 
     <!-- ios -->
@@ -57,4 +58,13 @@
         </js-module>
     </platform>
 
+	 <!-- browser -->
+    <platform name="browser">
+        <js-module src="www/browser/DatePicker.js" name="DatePicker">
+            <clobbers target="datePicker" />
+        </js-module>
+        <js-module src="src/browser/DatePickerProxy.js" name="DatePickerProxy">
+            <merges target="" />
+        </js-module>
+    </platform>
 </plugin>

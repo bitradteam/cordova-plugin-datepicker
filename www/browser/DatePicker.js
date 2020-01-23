@@ -1,17 +1,18 @@
 /**
- * Phonegap DatePicker Plugin Copyright (c) Greg Allen 2011 MIT Licensed
- * Reused and ported to Android plugin by Daniel van 't Oever
- */
-
+* Phonegap DatePicker Plugin Copyright (c) Greg Allen 2011 MIT Licensed
+* Reused and ported to Android plugin by Daniel van 't Oever
+* Reused and ported to Windows plugin by Thomas Uher
+*/
 /**
- * Constructor
- */
+* Constructor
+*/
 function DatePicker() {
 	//this._callback;
 }
 
 /**
  * Android themes
+ * @todo Avoid error when an Android theme is define...
  */
 DatePicker.prototype.ANDROID_THEMES = {
 	THEME_TRADITIONAL: 1, // default
@@ -22,48 +23,41 @@ DatePicker.prototype.ANDROID_THEMES = {
 };
 
 /**
- * show - true to show the ad, false to hide the ad
- */
+* show - true to show the ad, false to hide the ad
+*/
 DatePicker.prototype.show = function (options, cb, errCb) {
-
-	if (options.minDate && options.minDate instanceof Date) {
-		options.minDate = options.minDate.valueOf();
-	}
-	if (options.maxDate && options.maxDate instanceof Date) {
-		options.maxDate = options.maxDate.valueOf();
-	}
-
-	if (options.date && options.date instanceof Date) {
+	if (options.date) {
 		options.date = (options.date.getMonth() + 1) + "/" +
 			(options.date.getDate()) + "/" +
 			(options.date.getFullYear()) + "/" +
 			(options.date.getHours()) + "/" +
 			(options.date.getMinutes());
 	}
-
 	var defaults = {
 		mode: 'date',
 		date: '',
 		minDate: 0,
 		maxDate: 0,
-		titleText: '',
+		clearText: 'Clear',
 		cancelText: '',
 		okText: '',
-		todayText: '',
-		nowText: '',
-		is24Hour: false,
-		minuteInterval: 1,
-		androidTheme: window.datePicker.ANDROID_THEMES.THEME_TRADITIONAL, // Default theme
+		locale: '',
+		cssRules: '',
+		firstDayOfWeek: 0,
+		hoursLabel: '',
+		minutesLabel: '',
 	};
-
 	for (var key in defaults) {
 		if (typeof options[key] !== "undefined") {
 			defaults[key] = options[key];
 		}
 	}
-
+	//this._callback = cb;
 	var callback = function (message) {
-		if (message != 'error') {
+		if (message == -1) {
+			cb(message);
+		}
+		else {
 			var timestamp = Date.parse(message);
 			if (isNaN(timestamp) == false) {
 				cb(new Date(message));
@@ -71,8 +65,6 @@ DatePicker.prototype.show = function (options, cb, errCb) {
 			else {
 				cb();
 			}
-		} else {
-			// TODO error popup?
 		}
 	}
 
@@ -81,7 +73,7 @@ DatePicker.prototype.show = function (options, cb, errCb) {
 			errCb(message);
 		}
 	}
-
+	
 	cordova.exec(callback,
 		errCallback,
 		"DatePickerPlugin",
@@ -92,7 +84,6 @@ DatePicker.prototype.show = function (options, cb, errCb) {
 
 var datePicker = new DatePicker();
 module.exports = datePicker;
-
 // Make plugin work under window.plugins
 if (!window.plugins) {
 	window.plugins = {};
